@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Eka Wati</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .sparkle {
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    .slide-in {
+      animation: slideIn 0.8s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .love-particles {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff6b9d;
+      animation: hearts 4s ease-in-out infinite;
+    }
+    
+    @keyframes hearts {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+    
+    .typewriter {
+      overflow: hidden;
+      border-right: 2px solid #ff6b9d;
+      white-space: nowrap;
+      animation: typing 3s steps(40, end), blink-caret 0.5s step-end infinite;
+    }
+    
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #ff6b9d; }
+    }
+
+
+    /* Tambahan efek glow */
+.glow {
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #ff6b9d, 0 0 10px #ff6b9d, 0 0 15px #ff6b9d;
+  }
+  to {
+    text-shadow: 0 0 10px #ff85a2, 0 0 20px #ff85a2, 0 0 30px #ff85a2;
+  }
+}
+
+/* Fade-in delay untuk elemen galeri */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Efek popup modal */
+@keyframes popUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.popup-animate {
+  animation: popUp 0.5s ease-out;
+}
+
+  </style>
+</head>
+<body class="gradient-bg min-h-screen">
+  <!-- Love Particles -->
+  <div class="love-particles" id="loveParticles"></div>
+  <!-- Flower Particles -->
+<div class="love-particles" id="flowerParticles"></div>
+  <!-- Lockscreen -->
+  <div id="lockscreen" class="flex flex-col items-center justify-center h-screen px-4">
+    <div class="card-glass rounded-3xl p-8 text-center shadow-2xl max-w-md w-full">
+      <div class="text-6xl mb-4 sparkle">🎉</div>
+      <h1 class="text-3xl font-bold mb-6 text-white">Siapa Yang Berulang Tahun?</h1>
+      <input id="password" type="text" placeholder="Masukkan nama lengkap..." 
+             class="w-full px-6 py-4 rounded-2xl border-0 bg-white/20 text-white placeholder-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-pink-400 text-center"/>
+      <button onclick="checkPassword()" 
+              class="mt-6 w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+        ✨ Masuk ke Pesta! ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- Music Prompt Section -->
+  <div id="musicPrompt" class="hidden flex flex-col items-center justify-center h-screen px-4">
+    <div class="card-glass rounded-3xl p-8 text-center shadow-2xl max-w-md w-full">
+      <div class="text-6xl mb-4 sparkle">🎵</div>
+      <h1 class="text-3xl font-bold mb-4 text-white">Halo Eka Wati!</h1>
+      <p class="text-pink-200 mb-6 text-lg">Sebelum masuk ke pesta, yuk putar musik spesial untuk hari istimewamu!</p>
+      <button onclick="playMusicAndEnter()" 
+              class="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg mb-4">
+        🎶 Putar Musik & Masuk Pesta! 🎶
+      </button>
+     
+    </div>
+  </div>
+
+  <!-- Album Section -->
+<div id="album" class="hidden min-h-screen p-4 sm:p-6">
+  <audio id="birthday-audio" src="hbd.mp3" preload="auto" loop></audio>
+
+  <!-- Header -->
+  <div class="text-center mb-12">
+    <h1 class="text-4xl sm:text-6xl font-extrabold text-white mb-4 floating glow">
+
+      🎂 Selamat Ulang Tahun 🎂
+    </h1>
+    <div class="text-2xl sm:text-3xl font-bold text-pink-200 typewriter inline-block">
+      Dear Eka Wati  💖
+    </div>
+  </div>
+
+  <!-- Navigation Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 max-w-6xl mx-auto">
+    <div onclick="openTab('fotoTab')" class="cursor-pointer card-glass rounded-3xl p-8 text-center hover:scale-105 transition-all duration-300 group">
+      <div class="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">📸</div>
+      <p class="text-white text-xl font-bold">Galeri </p>
+      <p class="text-pink-200 text-sm mt-2">Kamu Istimewa</p>
+    </div>
+
+    <div onclick="openTab('suratTab')" class="cursor-pointer card-glass rounded-3xl p-8 text-center hover:scale-105 transition-all duration-300 group">
+      <div class="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">💌</div>
+      <p class="text-white text-xl font-bold">Surat Cinta</p>
+      <p class="text-pink-200 text-sm mt-2">Kata-kata dari hati untuk hati</p>
+    </div>
+
+    <div onclick="openTab('kueTab')" class="cursor-pointer card-glass rounded-3xl p-8 text-center hover:scale-105 transition-all duration-300 group">
+      <div class="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">🎂</div>
+      <p class="text-white text-xl font-bold">Kue Istimewa</p>
+      <p class="text-pink-200 text-sm mt-2">Manis seperti senyumanmu</p>
+    </div>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="max-w-6xl mx-auto">
+
+   <!-- Foto Tab -->
+<div id="fotoTab" class="tab-content hidden slide-in">
+  <div class="card-glass rounded-3xl p-8">
+    <h2 class="text-3xl font-bold text-white mb-8 text-center animate__animated animate__fadeInDown">📸 Galeri</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 animate__animated animate__fadeInUp animate__slow">
+      
+      <!-- Template Foto -->
+      <div class="bg-gradient-to-br from-pink-300 to-purple-400 rounded-3xl p-6 text-center hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-2xl group">
+        <div class="overflow-hidden rounded-2xl mb-4">
+          <img src="eka1.jpg" alt="eka1" class="rounded-2xl transform group-hover:scale-110 transition-transform duration-300">
+        </div>
+        <div class="text-4xl mb-2">📷</div>
+        <p class="text-pink-100 text-sm">Senyum yang menerangi hari</p>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-300 to-pink-400 rounded-3xl p-6 text-center hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-2xl group">
+        <div class="overflow-hidden rounded-2xl mb-4">
+          <img src="eka2.png" alt="eka2" class="rounded-2xl transform group-hover:scale-110 transition-transform duration-300">
+        </div>
+        <div class="text-4xl mb-2">🌸</div>
+        <p class="text-pink-100 text-sm">Cantik seperti bunga</p>
+      </div>
+
+      <div class="bg-gradient-to-br from-pink-400 to-purple-300 rounded-3xl p-6 text-center hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-2xl group">
+        <div class="overflow-hidden rounded-2xl mb-4">
+          <img src="eka3.jpg" alt="Eka Wati 3" class="rounded-2xl transform group-hover:scale-110 transition-transform duration-300">
+        </div>
+        <div class="text-4xl mb-2">✨</div>
+        <p class="text-pink-100 text-sm">Bersinar seperti bintang</p>
+      </div>
+
+      <div class="bg-gradient-to-br from-pink-300 to-purple-400 rounded-3xl p-6 text-center hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-2xl group">
+        <div class="overflow-hidden rounded-2xl mb-4">
+          <img src="eka4.jpg" alt="Eka Wati 4" class="rounded-2xl transform group-hover:scale-110 transition-transform duration-300">
+        </div>
+        <div class="text-4xl mb-2">💫</div>
+        <p class="text-pink-100 text-sm">Kamu yang istimewa</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+    <!-- Surat Tab -->
+   <div id="suratTab" class="tab-content hidden slide-in">
+  <div class="card-glass rounded-3xl p-8 sm:p-12">
+    <h2 class="text-3xl font-bold text-white mb-8 text-center">💌 Surat Spesial Untuk Eka Wati</h2>
+    <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8 sm:p-12 text-white max-w-4xl mx-auto">
+      <div class="text-center mb-8">
+        <div class="text-4xl mb-4">💖</div>
+        <h3 class="text-2xl font-bold text-pink-300">Untuk Kamu, yang Hari Ini Lebih Istimewa</h3>
+      </div>
+
+      <div class="space-y-6 text-lg leading-relaxed text-pink-100">
+        <p>Selamat ulang tahun 🎉</p>
+
+        <p>
+          Di dunia yang tak pernah berhenti berputar, kamu memilih untuk tetap berdiri. Bertahan. Melangkah, meski pelan. Dan bagiku, itu sudah lebih dari cukup untuk menyebutmu kuat.
+        </p>
+
+        <p>
+          Aku tahu, tidak semua hal berjalan sesuai harapan. Tapi hari ini—di hari kelahiranmu—aku ingin kamu tahu: kamu sudah melakukan yang terbaik. Kamu berhak bahagia.
+        </p>
+
+        <p>
+          Terima kasih telah sampai di titik ini. Terima kasih karena tetap menjadi kamu, dengan segala ketulusan, kekuatan, dan keberanian yang mungkin jarang kamu sadari sendiri.
+        </p>
+
+        <div class="bg-pink-400/20 rounded-2xl p-6">
+          <p>Doaku untukmu hari ini:</p>
+          <ul class="list-disc ml-5 mt-3 space-y-2">
+            <li>Semoga semua hal yang kamu semogakan, segera menjadi nyata.</li>
+            <li>Semoga hidupmu dipenuhi damai dan dikelilingi orang-orang yang tulus.</li>
+            <li>Dan semoga kamu terus menemukan cahaya, bahkan saat hari terasa gelap.</li>
+          </ul>
+        </div>
+
+        <p>
+          Kamu tidak harus sempurna untuk menjadi luar biasa. Kamu hanya perlu menjadi dirimu sendiri. Dan itu sudah cukup indah.
+        </p>
+
+        <p class="text-center text-pink-300 font-semibold text-xl">
+          Sekali lagi, selamat ulang tahun. Tetap hangat, tetap kuat. Dunia ini sedikit lebih baik karena ada kamu di dalamnya.
+        </p>
+
+        <div class="text-center mt-8">
+          <p class="text-pink-200">Dengan hormat dan rasa yang tulus,</p>
+          <p class="text-pink-300 font-bold text-xl mt-2">— dari orang yang paling ganteng</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+   <!-- Kue Tab -->
+<div id="kueTab" class="tab-content hidden text-center slide-in">
+  <div class="card-glass rounded-3xl p-8 sm:p-12">
+    <h2 class="text-3xl font-bold text-white mb-8">🎂 Kue Ulang Tahun Istimewa</h2>
+    <div class="text-9xl sm:text-[12rem] floating mb-6">🎂</div>
+    <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8 max-w-2xl mx-auto">
+      <h3 class="text-2xl font-bold text-pink-300 mb-4">Bukan Kue Biasa 🎉</h3>
+      <p class="text-white text-lg mb-4">
+        Memang bukan kue asli, tapi kue ini dibuat dengan sepenuh hati. Justru karena bukan kue biasa, dia bisa tahan lebih lama, menemani senyum kamu lebih dari sekadar satu hari 🎂😊
+      </p>
+      <p class="text-white text-lg mb-4">
+        Di hari ulang tahunmu ini, semoga kamu selalu dikelilingi cinta yang hangat, tawa yang tulus, dan hari-hari yang manis—manisnya bahkan ngalahin kue ini 😄
+      </p>
+      <p class="text-pink-300 text-xl font-semibold mt-6">
+        Selamat ulang tahun ya! Semoga hidupmu selalu selezat harapan terbaikmu dan selalu ada alasan untuk bersyukur setiap harinya.
+      </p>
+      <p class="mt-4 text-pink-200 text-sm italic">— Dan jangan lupa... meski ini cuma kue virtual, doanya nyata 🤍</p>
+    </div>
+  </div>
+</div>
+
+
+ <!-- Modal Penutup -->
+<div id="penutupModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center">
+  <div class="bg-white rounded-3xl p-8 max-w-md w-[90%] sm:w-[400px] text-center text-gray-800 shadow-2xl animate__animated animate__fadeInDown popup-animate">
+    <h2 class="text-2xl font-bold text-pink-600 mb-4">🎈 Penutup Manis 🎈</h2>
+    <p class="text-lg mb-4">
+      Terima kasih sudah bertahan sampai detik ini, jangan pernah melupakan bahwa kamu itu kuat, 💖.
+      Semoga kebahagiaan selalu menyertaimu. Sampai jumpa di momen istimewa selanjutnya!
+    </p>
+    <p class="font-semibold text-pink-500 mb-6">— Dengan Cinta 💝 —</p>
+    <button onclick="logout()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold px-6 py-3 rounded-full shadow-lg transition duration-300">
+      🚪 Keluar
+    </button>
+  </div>
+</div>
+
+
+
+  <script>
+    // Flower Particles (🌸)
+function createFlowerParticles() {
+  const flowerContainer = document.getElementById('flowerParticles');
+  const flowers = ['🌸', '🌷', '💐', '🌼'];
+
+  setInterval(() => {
+    const flower = document.createElement('div');
+    flower.className = 'heart';
+    flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+    flower.style.left = Math.random() * 100 + 'vw';
+    flower.style.fontSize = (Math.random() * 10 + 20) + 'px';
+    flower.style.animationDelay = Math.random() * 2 + 's';
+    flower.style.animationDuration = (Math.random() * 3 + 3) + 's';
+    flowerContainer.appendChild(flower);
+
+    setTimeout(() => {
+      flower.remove();
+    }, 6000);
+  }, 2500);
+}
+
+createFlowerParticles();
+
+    // Create love particles
+    function createLoveParticles() {
+      const container = document.getElementById('loveParticles');
+      const hearts = ['💖', '💝', '💕', '💗', '💘', '💞', '💓', '💟'];
+      
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDelay = Math.random() * 2 + 's';
+        heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+        container.appendChild(heart);
+        
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }, 3000);
+    }
+    
+    createLoveParticles();
+
+    function checkPassword() {
+      const input = document.getElementById('password').value.trim().toLowerCase();
+      if (input === 'eka wati') {
+        document.getElementById('lockscreen').classList.add('hidden');
+        document.getElementById('musicPrompt').classList.remove('hidden');
+      } else {
+        alert('Nama tidak cocok. Coba lagi yaa! 💕');
+      }
+    }
+
+    function playMusicAndEnter() {
+      // Play birthday audio
+      const audio = document.getElementById('birthday-audio');
+      if (audio) {
+        audio.play().catch(e => {
+          console.log('Audio play failed:', e);
+          // Still proceed to album even if audio fails
+          enterAlbum();
+        });
+        // Wait a bit then enter album
+        setTimeout(() => {
+          enterAlbum();
+        }, 1000);
+      } else {
+        enterAlbum();
+      }
+    }
+
+    function skipMusic() {
+      enterAlbum();
+    }
+
+    function enterAlbum() {
+      document.getElementById('musicPrompt').classList.add('hidden');
+      document.getElementById('album').classList.remove('hidden');
+      
+      // Don't show any tab initially - let user choose
+    }
+
+  function openTab(tabName) {
+  // Sembunyikan semua tab
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.add('hidden');
+  });
+
+  // Tampilkan tab yang dipilih
+  const selectedTab = document.getElementById(tabName);
+  selectedTab.classList.remove('hidden');
+
+  // Tambahkan animasi slide-in
+  selectedTab.classList.remove('slide-in');
+  setTimeout(() => {
+    selectedTab.classList.add('slide-in');
+  }, 10);
+
+  // Jika buka tab kue, tampilkan modal penutup setelah 5 detik
+  if (tabName === 'kueTab') {
+    setTimeout(() => {
+      document.getElementById('penutupModal').classList.remove('hidden');
+    }, 15000);
+  }
+}
+
+    // Allow Enter key to submit password
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+
+    function logout() {
+  // Redirect ke halaman awal (misalnya index.html)
+  window.location.href = "Eka Wati.html"; // ganti sesuai kebutuhan
+}
+
+  </script>
+</body>
+</html>
